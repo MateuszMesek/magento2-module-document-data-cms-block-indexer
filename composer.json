@@ -1,0 +1,22 @@
+{
+    "name": "mateuszmesek-magento2/module-document-data-cms-block-indexer",
+    "description": "N/A",
+    "type": "magento2-module",
+    "require": {
+        "magento/framework": "*",
+        "magento/module-catalog": "*",
+        "mateuszmesek-magento2/module-document-data-cms-block": "*",
+        "mateuszmesek-magento2/module-document-data-indexer": "*"
+    },
+    "license": [
+        "MIT"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "MateuszMesek\\DocumentDataCmsBlockIndexer\\": "src"
+        }
+    }
+}
