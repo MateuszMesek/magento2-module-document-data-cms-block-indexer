@@ -3,8 +3,8 @@
 namespace MateuszMesek\DocumentDataCmsBlockIndexer;
 
 use MateuszMesek\DocumentDataCmsBlock\Command\GetDocumentDataByBlockIdAndStoreId;
-use MateuszMesek\DocumentDataIndexerApi\DataResolverInterface;
-use MateuszMesek\DocumentDataIndexerApi\DimensionResolverInterface;
+use MateuszMesek\DocumentDataIndexIndexerApi\DataResolverInterface;
+use MateuszMesek\DocumentDataIndexIndexerApi\DimensionResolverInterface;
 use Traversable;
 
 class DataResolver implements DataResolverInterface
@@ -26,13 +26,13 @@ class DataResolver implements DataResolverInterface
         $storeId = $this->storeIdResolver->resolve($dimensions);
 
         foreach ($entityIds as $entityId) {
-            $data = $this->getDocumentDataByBlockIdAndStoreId->execute($entityId, $storeId);
+            $data = $this->getDocumentDataByBlockIdAndStoreId->execute((int)$entityId, $storeId);
 
             if (empty($data)) {
                 return;
             }
 
-            yield $data;
+            yield $entityId => $data;
         }
     }
 }

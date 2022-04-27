@@ -5,8 +5,9 @@ namespace MateuszMesek\DocumentDataCmsBlockIndexer;
 use Magento\Cms\Api\Data\BlockInterface;
 use Magento\Cms\Model\ResourceModel\Block\CollectionFactory;
 use Magento\Framework\DB\Select;
-use MateuszMesek\DocumentDataIndexerApi\DimensionResolverInterface;
-use MateuszMesek\DocumentDataIndexerApi\EntityIdsResolverInterface;
+use MateuszMesek\DocumentDataIndexIndexerApi\DimensionResolverInterface;
+use MateuszMesek\DocumentDataIndexIndexerApi\EntityIdsResolverInterface;
+use Throwable;
 use Traversable;
 
 class EntityIdsResolver implements EntityIdsResolverInterface
@@ -33,14 +34,19 @@ class EntityIdsResolver implements EntityIdsResolverInterface
         $collection->setPageSize(100);
         $collection->getSelect()
             ->reset(Select::COLUMNS)
-            ->columns([BlockInterface::BLOCK_ID])
-            ->setPart('disable_staging_preview', true);
+            ->columns([BlockInterface::BLOCK_ID]);
+
+        try {
+            $collection->getSelect()->setPart('disable_staging_preview', true);
+        } catch (Throwable $exception) {
+
+        }
 
         $lastId = 0;
 
         while (true) {
             $part = (clone $collection);
-            $part->getSelect()->where('block_id > ?', $lastId);
+            $part->getSelect()->where('main_table.block_id > ?', $lastId);
             $part->load();
 
             $ids = array_map(
