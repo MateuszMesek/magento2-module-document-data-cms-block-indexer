@@ -28,10 +28,6 @@ class DataResolver implements DataResolverInterface
         foreach ($entityIds as $entityId) {
             $data = $this->getDocumentDataByBlockIdAndStoreId->execute((int)$entityId, $storeId);
 
-            if (empty($data)) {
-                return;
-            }
-
             yield $entityId => $data;
         }
     }
