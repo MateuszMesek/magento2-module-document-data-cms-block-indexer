@@ -1,27 +1,22 @@
 <?php declare(strict_types=1);
 
-namespace MateuszMesek\DocumentDataCmsBlockIndexer;
+namespace MateuszMesek\DocumentDataCmsBlockIndexer\Model;
 
 use Magento\Cms\Api\Data\BlockInterface;
 use Magento\Cms\Model\ResourceModel\Block\CollectionFactory;
 use Magento\Framework\DB\Select;
-use MateuszMesek\DocumentDataIndexIndexerApi\DimensionResolverInterface;
-use MateuszMesek\DocumentDataIndexIndexerApi\EntityIdsResolverInterface;
+use MateuszMesek\DocumentDataIndexIndexerApi\Model\DimensionResolverInterface;
+use MateuszMesek\DocumentDataIndexIndexerApi\Model\IdsResolverInterface;
 use Throwable;
 use Traversable;
 
-class EntityIdsResolver implements EntityIdsResolverInterface
+class IdsResolver implements IdsResolverInterface
 {
-    private DimensionResolverInterface $storeIdResolver;
-    private CollectionFactory $collectionFactory;
-
     public function __construct(
-        DimensionResolverInterface $storeIdResolver,
-        CollectionFactory $collectionFactory
+        private readonly DimensionResolverInterface $storeIdResolver,
+        private readonly CollectionFactory          $collectionFactory
     )
     {
-        $this->storeIdResolver = $storeIdResolver;
-        $this->collectionFactory = $collectionFactory;
     }
 
     public function resolve(array $dimensions): Traversable
